@@ -1,5 +1,6 @@
 package nav.api.pedidos.validation.handler;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -24,18 +26,32 @@ public class CustomHandler extends ResponseEntityExceptionHandler {
                                                                   HttpStatus status, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("status", status.value());
+        body.put("estado", status.value());
 
-        //Get all errors
+        //Obtengo todo los errores
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(x -> x.getDefaultMessage())
                 .collect(Collectors.toList());
 
-        body.put("errors", errors);
+        body.put("errores", errors);
 
         return new ResponseEntity<>(body, headers, status);
 
     }
+	
+	/*** Para manejar excepciones que llegaran a no catchear ***/
+	@ExceptionHandler(Exception.class)
+	protected ResponseEntity<Object> handlerServerError(Exception ex) {
+		
+		 Map<String, Object> body = new LinkedHashMap<>();
+	     body.put("estado", HttpStatus.INTERNAL_SERVER_ERROR);
+	     
+	     List<String> errors = Arrays.asList("Error en el servidor!");
+	     
+		 body.put("errores", errors);
+		
+		 return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }

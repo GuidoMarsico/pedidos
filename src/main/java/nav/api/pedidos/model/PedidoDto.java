@@ -13,11 +13,13 @@ public class PedidoDto {
 	private Long id;
 
 	@NotNull(message = "El campo nombre es obligatorio.")
-	@Size(max = 20, message = "El campo nombre no puede superar los 100 caracteres.")
+	@Size(max = 100, message = "El campo nombre no puede superar los 100 caracteres.")
 	private String nombre;
 
 	@NotNull(message = "El campo monto es obligatorio.")
 	private BigDecimal monto;
+	
+	private Integer descuento;
 
 	
 	public PedidoDto() {
@@ -46,6 +48,35 @@ public class PedidoDto {
 
 	public void setMonto(BigDecimal monto) {
 		this.monto = monto;
+	}
+	
+	public Integer getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(Integer descuento) {
+		this.descuento = descuento;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj == null) return false;
+
+	    if (!(obj instanceof PedidoDto))
+
+	        return false;
+
+	    if (obj == this)
+
+	        return true;
+
+	    return this.getId() == ((PedidoDto) obj).getId();
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		return this.id.intValue();
 	}
 	
 	

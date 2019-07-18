@@ -1,14 +1,14 @@
 package nav.api.pedidos.dao;
 
-import nav.api.pedidos.entity.Pedido;
+import nav.api.pedidos.model.PedidoDto;
 
 public class PedidoDao {
 
-    public static void insertOrUpdate(Pedido pedido){}
+    public static void insertOrUpdate(PedidoDto pedido){}
 
     public static void deletePedido(Integer pedidoId){}
 
-    public static Pedido select(Integer pedidoId){
+    public static PedidoDto select(Integer pedidoId){
         return null;
     }
 

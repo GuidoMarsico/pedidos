@@ -3,7 +3,7 @@ package nav.api.pedidos.cache;
 public class BumexMemcached {
     private static BumexMemcached ourInstance = new BumexMemcached();
 
-    public static BumexMemcached getInstance() {
+    public synchronized static BumexMemcached getInstance() {
         return ourInstance;
     }
 
