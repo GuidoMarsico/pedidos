@@ -15,21 +15,43 @@ public class PedidosServiceImpl implements IPedidosService {
 	
 	private BumexMemcached cache = BumexMemcached.getInstance();
 	
+	/***@param PedidoDto pedido
+	 *  @return Boolean -> Nos indica si fue ok o no ***/
 	@Override
-	public void crearModificarPedido(PedidoDto pedido)  {
+	public Boolean crearModificarPedido(PedidoDto pedido)  {
 		logger.info("<< crearModificarPedido >>");
-		PedidoDao.insertOrUpdate(pedido);
-		this.actulizarCache(pedido);
+		try {
+			PedidoDao.insertOrUpdate(pedido);
+			this.actulizarCache(pedido);
+			logger.info("<< Se logro crear o modificar el pedido : "+ pedido.toString() +" >>");
+			return true;
+		} catch (Exception e) {
+			logger.error("<< No se pudo crear o modificar un pedido: "+  pedido.toString() +" >>");
+			logger.error(e.getMessage());
+		}
+		
+		return false;
 	}
-
+	
+	/***@param Long pedidoId
+	 *  @return Boolean -> Nos indica si fue ok o no ***/
 	@Override
 	public Boolean eliminarPedido(Long pedidoId) {
 		logger.info("<< eliminarPedido >>");
-		this.cache.delete(String.valueOf(pedidoId));
-		PedidoDao.deletePedido(pedidoId.intValue());
-		return true;
+		try {
+			this.cache.delete(String.valueOf(pedidoId));
+			PedidoDao.deletePedido(pedidoId.intValue());
+			logger.info("<< Se pudo eliminar el pedidoID : "+ String.valueOf(pedidoId) +" >>");
+			return true;
+		} catch (Exception e) {
+			logger.error("<< No se pudo eliminar  el pedidoID :"+ String.valueOf(pedidoId) +" >>");
+			logger.error(e.getMessage());
+		}
+		return false;
 	}
-
+	
+	/***@param Long pedidoId
+	 *  @return PedidoDto pedido  ***/
 	@Override
 	public PedidoDto buscarPedido(Long pedidoId) {
 		logger.info("<< buscarPedido >>");

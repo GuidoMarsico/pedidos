@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import nav.api.pedidos.model.PedidoDto;
 import nav.api.pedidos.service.IPedidosService;
@@ -30,23 +29,23 @@ public class PedidosController {
 	  private IPedidosService service;
 	
 	   @PostMapping("/guardar")
-       public  @ResponseBody ResponseEntity<PedidoDto> crearModificarPedido(@Valid @RequestBody PedidoDto pedido)   {
-		   logger.info("Se recibio una peticion de un nuevo pedido ");
-		   service.crearModificarPedido(pedido);
-    	   return ResponseEntity.ok(pedido);
+       public   ResponseEntity<Boolean> crearModificarPedido(@Valid @RequestBody PedidoDto pedido)   {
+		   logger.info("<< Se recibio una peticion de un nuevo pedido >>");
+		   Boolean resultado = service.crearModificarPedido(pedido);
+    	   return ResponseEntity.ok(resultado);
        }
        
 	   @GetMapping("/{pedidoId}")
 	   public ResponseEntity<PedidoDto> get(@PathVariable Long pedidoId){
-		   logger.info("Se recibio una peticion para obtener un pedido ");
+		   logger.info("<< Se recibio una peticion para obtener un pedido >>");
 		   PedidoDto pedido = service.buscarPedido(pedidoId);
 		   return ResponseEntity.ok(pedido);
 	   }
 	   
 	   @DeleteMapping("/{pedidoId}")
 	   public ResponseEntity<Boolean> delete(@PathVariable Long pedidoId){
-		    logger.info("Se recibio una peticion para elimiar un pedido ");
-		   	service.eliminarPedido(pedidoId);
-		   	return ResponseEntity.ok(true);
+		    logger.info("<< Se recibio una peticion para elimiar un pedido >>");
+		   	Boolean resultado = service.eliminarPedido(pedidoId);
+		   	return ResponseEntity.ok(resultado);
 	   }
 }
