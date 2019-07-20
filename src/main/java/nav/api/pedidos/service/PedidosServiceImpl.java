@@ -66,6 +66,7 @@ public class PedidosServiceImpl implements IPedidosService {
 	private void actulizarCache(PedidoDto pedido) {
 		logger.info("<< actulizarCache >>");
 		pedido.getId().ifPresent( id -> this.cache.set(String.valueOf(id), pedido));
+
 	}
    
 }

@@ -31,8 +31,7 @@ public class PedidosController {
 	  
 	  @Autowired
 	  private IPedidosService service;
-	  	
-	   
+
 	   @PostMapping("/guardar")
        public @ResponseBody  ResponseEntity<Boolean> crearModificarPedido(@Valid @RequestBody PedidoDto pedido)   {
 		   logger.info("<< Se recibio una peticion de un nuevo pedido >>");
