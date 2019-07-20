@@ -1,6 +1,8 @@
 package nav.api.pedidos.model;
 
 import java.math.BigDecimal;
+import java.util.Optional;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -10,7 +12,7 @@ import javax.validation.constraints.Size;
  *  ***/
 public class PedidoDto {
 	
-	private Long id;
+	private Optional<Long> id;
 
 	@NotNull(message = "El campo nombre es obligatorio.")
 	@Size(max = 100, message = "El campo nombre no puede superar los 100 caracteres.")
@@ -19,9 +21,8 @@ public class PedidoDto {
 	@NotNull(message = "El campo monto es obligatorio.")
 	private BigDecimal monto;
 	
-	private Integer descuento;
+	private Optional<Integer> descuento;
 
-	
 	public PedidoDto() {
 	
 	}
@@ -34,11 +35,11 @@ public class PedidoDto {
 		this.nombre = nombre;
 	}
 
-	public Long getId() {
+	public Optional<Long> getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Optional<Long> id) {
 		this.id = id;
 	}
 
@@ -50,11 +51,11 @@ public class PedidoDto {
 		this.monto = monto;
 	}
 	
-	public Integer getDescuento() {
+	public Optional<Integer> getDescuento() {
 		return descuento;
 	}
 
-	public void setDescuento(Integer descuento) {
+	public void setDescuento(Optional<Integer> descuento) {
 		this.descuento = descuento;
 	}
 
@@ -76,8 +77,7 @@ public class PedidoDto {
 	
 	@Override
 	public int hashCode() {
-		return this.id.intValue();
+		return this.id.get().intValue();
 	}
-	
 	
 }

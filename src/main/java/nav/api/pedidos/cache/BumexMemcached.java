@@ -1,9 +1,13 @@
 package nav.api.pedidos.cache;
 
+/*** Se encargaria de tener en memoria los pedidos, 
+ 	 para no estar haciendo tantas peticiones a la db.
+ 	 No se realiza implementacion por el momento.  
+***/
 public class BumexMemcached {
     private static BumexMemcached ourInstance = new BumexMemcached();
 
-    public synchronized static BumexMemcached getInstance() {
+    public static  synchronized  BumexMemcached getInstance() {
         return ourInstance;
     }
 

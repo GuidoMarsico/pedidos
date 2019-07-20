@@ -23,10 +23,10 @@ public class PedidosServiceImpl implements IPedidosService {
 		try {
 			PedidoDao.insertOrUpdate(pedido);
 			this.actulizarCache(pedido);
-			logger.info("<< Se logro crear o modificar el pedido : "+ pedido.toString() +" >>");
+			logger.info("<< Se logro crear o modificar el pedido >>");
 			return true;
 		} catch (Exception e) {
-			logger.error("<< No se pudo crear o modificar un pedido: "+  pedido.toString() +" >>");
+			logger.error("<< No se pudo crear o modificar un pedido >>");
 			logger.error(e.getMessage());
 		}
 		
@@ -41,10 +41,10 @@ public class PedidosServiceImpl implements IPedidosService {
 		try {
 			this.cache.delete(String.valueOf(pedidoId));
 			PedidoDao.deletePedido(pedidoId.intValue());
-			logger.info("<< Se pudo eliminar el pedidoID : "+ String.valueOf(pedidoId) +" >>");
+			logger.info("Se pudo eliminar el pedido");
 			return true;
 		} catch (Exception e) {
-			logger.error("<< No se pudo eliminar  el pedidoID :"+ String.valueOf(pedidoId) +" >>");
+			logger.error("No se pudo eliminar el pedido");
 			logger.error(e.getMessage());
 		}
 		return false;
@@ -65,9 +65,7 @@ public class PedidosServiceImpl implements IPedidosService {
 	
 	private void actulizarCache(PedidoDto pedido) {
 		logger.info("<< actulizarCache >>");
-		if(pedido != null) {
-			this.cache.set(String.valueOf(pedido.getId()), pedido);
-		}
+		pedido.getId().ifPresent( id -> this.cache.set(String.valueOf(id), pedido));
 	}
    
 }
