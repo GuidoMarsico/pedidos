@@ -23,10 +23,10 @@ public class PedidosServiceImpl implements IPedidosService {
 		try {
 			PedidoDao.insertOrUpdate(pedido);
 			this.actulizarCache(pedido);
-			logger.info("<< Se logro crear o modificar el pedido : "+ pedido.toString() +" >>");
+			logger.info("<< Se logro crear o modificar el pedido >>");
 			return true;
 		} catch (Exception e) {
-			logger.error("<< No se pudo crear o modificar un pedido: "+  pedido.toString() +" >>");
+			logger.error("<< No se pudo crear o modificar un pedido >>");
 			logger.error(e.getMessage());
 		}
 		
@@ -65,7 +65,7 @@ public class PedidosServiceImpl implements IPedidosService {
 	
 	private void actulizarCache(PedidoDto pedido) {
 		logger.info("<< actulizarCache >>");
-		if(pedido != null) {
+		if(pedido != null && pedido.getId().isPresent()) {
 			this.cache.set(String.valueOf(pedido.getId()), pedido);
 		}
 	}
